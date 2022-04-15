@@ -12,9 +12,7 @@
             <h5>@Model.Post.Header</h5>
         </div>
         <div class="col-md-12">
-            <p>
-                @Model.Post.Content
-            </p>
+            @Html.Raw(Model.Post.Content)
         </div>
         <div id="questions" class="row">
             <div class="col-md-12 mb-1">

@@ -67,9 +67,12 @@ namespace ExamProject.MVC.Controllers
                 var result = await _userService.LoginAsync(loginVM.Email, loginVM.Password, loginVM.RememberMe);
                 if (result)
                 {
-                    // Todo: If user role is admin
-                    GetPostsFromWired getPostsFromWired = new GetPostsFromWired(_postService);
-                    getPostsFromWired.GetPosts();
+                    var roleResult = await _userService.IsInRole(loginVM.Email, "Admin");
+                    if (roleResult)
+                    {
+                        GetPostsFromWired getPostsFromWired = new GetPostsFromWired(_postService);
+                        getPostsFromWired.GetPosts();
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 return View(loginVM);

@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-12 border border-dark my-2" id="post_area">
             @{var posts = ViewBag.Posts as List<PostDto>;}
-            @posts[0].Content
+            @Html.Raw(posts[0].Content)
         </div>
         <div class="row">
             <div class="form-floating col-md-12">

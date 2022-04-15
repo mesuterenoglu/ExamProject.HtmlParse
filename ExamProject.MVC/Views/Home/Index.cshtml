@@ -1,13 +1,21 @@
-﻿@{
+﻿@inject IUserService userService
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Sitemize Hoşgeldiniz!</h1>
-    <p>
-        İlgili menülere ulaşmak için
-        <a asp-action="Register" asp-controller="Home">kayıt olun</a>
-        , eğer zaten kullanıcı iseniz
-        <a asp-action="Login" asp-controller="Home">kullanıcı girişi yapın</a>
-    </p>
+    @if (userService.IsSignIn(User))
+    {
+        <h1 class="display-4">Sitemize Hoşgeldiniz! @User.Identity.Name</h1>
+    }
+    else
+    {
+        <h1 class="display-4">Sitemize Hoşgeldiniz!</h1>
+        <p>
+            İlgili menülere ulaşmak için
+            <a asp-action="Register" asp-controller="Home">kayıt olun</a>
+            , eğer zaten kullanıcı iseniz
+            <a asp-action="Login" asp-controller="Home">kullanıcı girişi yapın</a>
+        </p>
+    }
 </div>

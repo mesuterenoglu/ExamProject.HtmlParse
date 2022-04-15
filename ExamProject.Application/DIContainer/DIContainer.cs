@@ -19,7 +19,10 @@ namespace ExamProject.Application.DIContainer
     {
         public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppDbContext>(x => x.UseLazyLoadingProxies().UseSqlite(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ExamProject.Infrustracture")));
+            services.AddDbContext<AppDbContext>(x => 
+                x.UseLazyLoadingProxies()
+                .UseSqlite(configuration.GetConnectionString("DefaultConnection"), 
+                b => b.MigrationsAssembly("ExamProject.Infrustracture")));
 
             services.AddIdentity<AppUser, IdentityRole<Guid>>(opt =>
             {
