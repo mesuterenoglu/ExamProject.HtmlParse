@@ -1,0 +1,192 @@
+﻿@model CreateExamVM
+
+@{
+    ViewData["Title"] = "Sınav Oluştur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-6 mx-auto">
+    <div class="mb-2">Create Exam</div>
+    <form asp-action="CreateExam" asp-controller="Exam">
+        <div class="row">
+            <div class="col-md-12">
+                @if (ViewBag.Posts != null)
+                {
+                    <select id="postSelect" asp-for="PostId" class="form-select" onchange="PostNameChange()">
+
+                        @foreach (var post in ViewBag.Posts as List<PostDto>)
+                        {
+                            <option value="@post.Id">@post.Header</option>
+                        }
+                    </select>
+                }
+            </div>
+        </div>
+        <div class="col-md-12 border border-dark my-2" id="post_area">
+            @{var posts = ViewBag.Posts as List<PostDto>;}
+            @posts[0].Content
+        </div>
+        <div class="row">
+            <div class="form-floating col-md-12">
+                <label asp-for="Question1">Soru 1</label>
+                <textarea asp-for="Question1" class="form-control" placeholder="Soru 1"></textarea>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 float-left d-flex p-2">
+                    <label class="mr-2">A)</label>
+                    <input asp-for="Question1Option1" class="form-control" />
+                </div>
+                <div class="col-md-6 float-right d-flex p-2">
+                    <label class="mr-2">B)</label>
+                    <input asp-for="Question1Option2" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 float-left d-flex p-2">
+                    <label class="mr-2">C)</label>
+                    <input asp-for="Question1Option3" class="form-control" />
+                </div>
+                <div class="col-md-6 float-right d-flex p-2">
+                    <label class="mr-2">D)</label>
+                    <input asp-for="Question1Option4" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-12 text-center">
+                <label>Doğru Cevap</label>
+                <select asp-for="Question1CorrectOption" class="form-select">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-floating col-md-12">
+                <label asp-for="Question2">Soru 2</label>
+                <textarea asp-for="Question2" class="form-control" placeholder="Soru 2"></textarea>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 float-left d-flex p-2">
+                    <label class="mr-2">A)</label>
+                    <input asp-for="Question2Option1" class="form-control" />
+                </div>
+                <div class="col-md-6 float-right d-flex p-2">
+                    <label class="mr-2">B)</label>
+                    <input asp-for="Question2Option2" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 float-left d-flex p-2">
+                    <label class="mr-2">C)</label>
+                    <input asp-for="Question2Option3" class="form-control" />
+                </div>
+                <div class="col-md-6 float-right d-flex p-2">
+                    <label class="mr-2">D)</label>
+                    <input asp-for="Question2Option4" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-12 text-center">
+                <label>Doğru Cevap</label>
+                <select asp-for="Question2CorrectOption" class="form-select">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-floating col-md-12">
+                <label asp-for="Question3">Soru 3</label>
+                <textarea asp-for="Question3" class="form-control" placeholder="Soru 3"></textarea>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 float-left d-flex p-2">
+                    <label class="mr-2">A)</label>
+                    <input asp-for="Question3Option1" class="form-control" />
+                </div>
+                <div class="col-md-6 float-right d-flex p-2">
+                    <label class="mr-2">B)</label>
+                    <input asp-for="Question3Option2" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 float-left d-flex p-2">
+                    <label class="mr-2">C)</label>
+                    <input asp-for="Question3Option3" class="form-control" />
+                </div>
+                <div class="col-md-6 float-right d-flex p-2">
+                    <label class="mr-2">D)</label>
+                    <input asp-for="Question3Option4" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-12 text-center">
+                <label>Doğru Cevap</label>
+                <select asp-for="Question3CorrectOption" class="form-select">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-floating col-md-12">
+                <label asp-for="Question4">Soru 4</label>
+                <textarea asp-for="Question4" class="form-control" placeholder="Soru 4"></textarea>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 float-left d-flex p-2">
+                    <label class="mr-2">A)</label>
+                    <input asp-for="Question4Option1" class="form-control" />
+                </div>
+                <div class="col-md-6 float-right d-flex p-2">
+                    <label class="mr-2">B)</label>
+                    <input asp-for="Question4Option2" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6 float-left d-flex p-2">
+                    <label class="mr-2">C)</label>
+                    <input asp-for="Question4Option3" class="form-control" />
+                </div>
+                <div class="col-md-6 float-right d-flex p-2">
+                    <label class="mr-2">D)</label>
+                    <input asp-for="Question4Option4" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-12 text-center">
+                <label>Doğru Cevap</label>
+                <select asp-for="Question4CorrectOption" class="form-select">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+        </div>
+        <div asp-validation-summary="All">
+
+        </div>
+        <button class="btn btn-primary float-right">Sınavı Oluştur</button>
+    </form>
+</div>
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script>
+    const PostNameChange = () => {
+        let postId = $("#postSelect").val();
+        $.ajax({
+
+            url: "/Post/GetbyId",
+            type: "POST",
+            contentType: "application/json",
+            async: false,
+            dataType: "JSON",
+            data: JSON.stringify(postId),
+            success: function (result) {
+                $("#post_area").html(result);
+            }
+        })
+    }
+</script>
+

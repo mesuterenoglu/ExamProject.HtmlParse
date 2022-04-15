@@ -1,0 +1,130 @@
+﻿@model ExamDto
+@{
+    ViewData["Title"] = "Sınav Ol";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12 text-center">
+            <h1>Sınava Hoşgeldiniz!</h1>
+        </div>
+        <div class="col-md-12">
+            <h5>@Model.Post.Header</h5>
+        </div>
+        <div class="col-md-12">
+            <p>
+                @Model.Post.Content
+            </p>
+        </div>
+        <div id="questions" class="row">
+            <div class="col-md-12 mb-1">
+                <h5 class="text-center ">Sorular</h5>
+            </div>
+            @for (int i = 0; i < Model.Questions.Count; i++)
+            {
+                <div class="col-md-6 mb-2">
+                    <div class="card h-100 border border-dark">
+                        <div class="card-header bg-white d-flex h-100">
+                            <label>@(i+1))</label>
+                            <div class="card-text question">
+                                @Model.Questions[i].QuestionHeader
+                            </div>
+                        </div>
+                        <div class="cord-body">
+                            <div class="col-sm-12 d-flex border-top border-bottom border-dark optionDiv q@(i+1)optionDiv" onclick="q@(i+1)optionDivClick(this)">
+                                <label>A)</label>
+                                <p class="card-text" id="q@(i+1)option1">@Model.Questions[i].Options[0].Option</p>
+                            </div>
+                            <div class="col-sm-12 d-flex border-top border-bottom border-dark optionDiv q@(i+1)optionDiv" onclick="q@(i+1)optionDivClick(this)">
+                                <label>B)</label>
+                                <p class="card-text" id="q@(i+1)option2">@Model.Questions[i].Options[1].Option</p>
+                            </div>
+                            <div class="col-sm-12 d-flex border-top border-bottom border-dark optionDiv q@(i+1)optionDiv" onclick="q@(i+1)optionDivClick(this)">
+                                <label>C)</label>
+                                <p class="card-text" id="q@(i+1)option3">@Model.Questions[i].Options[2].Option</p>
+                            </div>
+                            <div class="col-sm-12 d-flex border-top border-bottom border-dark optionDiv q@(i+1)optionDiv" onclick="q@(i+1)optionDivClick(this)">
+                                <label>D)</label>
+                                <p class="card-text" id="q@(i+1)option4">@Model.Questions[i].Options[3].Option</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div id="btnDiv" class="col-md-12 text-center mt-2">
+            <button id="btnComplete" class="btn btn-primary" value="@Model.Id">Sınavı Tamamla</button>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script>
+
+    const q1optionDivClick = (div) => {
+        if ($(".q1optionDiv").hasClass("bg-warning")) {
+            $(".q1optionDiv").removeClass("bg-warning")
+        }
+        div.classList.add("bg-warning");
+    }
+
+    const q2optionDivClick = (div) => {
+        if ($(".q2optionDiv").hasClass("bg-warning")) {
+            $(".q2optionDiv").removeClass("bg-warning")
+        }
+        div.classList.add("bg-warning");
+    }
+
+    const q3optionDivClick = (div) => {
+        if ($(".q3optionDiv").hasClass("bg-warning")) {
+            $(".q3optionDiv").removeClass("bg-warning")
+        }
+        div.classList.add("bg-warning");
+    }
+
+    const q4optionDivClick = (div) => {
+        if ($(".q4optionDiv").hasClass("bg-warning")) {
+            $(".q4optionDiv").removeClass("bg-warning")
+        }
+        div.classList.add("bg-warning");
+    }
+
+    $("#btnComplete").click(function () {
+        let examId = $(this).val();
+        $.ajax({
+
+            url: "/Exam/GetOptionsbyExam",
+            type: "POST",
+            contentType: "application/json",
+            async: false,
+            dataType: "JSON",
+            data: JSON.stringify(examId),
+            success: function (result) {
+                checkResults(result);
+                $(".optionDiv").removeAttr("onClick");
+                $("#btnDiv").html("");
+                $("#btnDiv").html('<a href="/Exam/ExamList" class="btn btn-primary">Başka Sınav Gir</a>');
+            }
+        })
+    });
+
+    const checkResults = (results) => {
+
+        for (var i = 0; i < results.length; i++) {
+            let className = `.q${i + 1}optionDiv`
+            let correctOption = results[i];
+            for (var x = 0; x < $(className).length; x++) {
+                if ($(className)[x].children[1].textContent == correctOption) {
+                    $(className)[x].classList.add("bg-success");
+                    $(className)[x].classList.remove("bg-warning");
+                }
+                else {
+                    if ($(className)[x].classList.contains("bg-warning")) {
+                        $(className)[x].classList.add("bg-danger");
+                        $(className)[x].classList.remove("bg-warning");
+                    }
+                }
+            }
+        }
+    }
+
+</script>
